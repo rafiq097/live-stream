@@ -1,25 +1,38 @@
-const express = require("express");
-const bodyParser = require("body-parser");
 const { Server } = require("socket.io");
 
-const app = express();
-const io = new Server();
-app.use(bodyParser.json());
-
-const emailMapping = new Map();
-
-io.on('connection', (socket) => {
-    socket.on("join-room", (data) => {
-        const { roomId, emailId } = data;
-        console.log(`User: ${emailId} joined room: ${roomId}`);
-        emailMapping.set(emailId, socket.id);
-        socket.join(roomId);
-        socket.broadcast.to(roomId).emit("User Joined ", { emailId });
-    })
+const io = new Server(8000, {
+  cors: true,
 });
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`Server listening on ${PORT}`);
+const emailToSocketIdMap = new Map();
+const socketidToEmailMap = new Map();
+
+io.on("connection", (socket) => {
+  console.log(`Socket Connected`, socket.id);
+  socket.on("room:join", (data) => {
+    const { email, room } = data;
+    emailToSocketIdMap.set(email, socket.id);
+    socketidToEmailMap.set(socket.id, email);
+    io.to(room).emit("user:joined", { email, id: socket.id });
+    socket.join(room);
+    io.to(socket.id).emit("room:join", data);
+  });
+
+  socket.on("user:call", ({ to, offer }) => {
+    io.to(to).emit("incomming:call", { from: socket.id, offer });
+  });
+
+  socket.on("call:accepted", ({ to, ans }) => {
+    io.to(to).emit("call:accepted", { from: socket.id, ans });
+  });
+
+  socket.on("peer:nego:needed", ({ to, offer }) => {
+    console.log("peer:nego:needed", offer);
+    io.to(to).emit("peer:nego:needed", { from: socket.id, offer });
+  });
+
+  socket.on("peer:nego:done", ({ to, ans }) => {
+    console.log("peer:nego:done", ans);
+    io.to(to).emit("peer:nego:final", { from: socket.id, ans });
+  });
 });
-io.listen(3001);
