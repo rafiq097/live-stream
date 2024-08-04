@@ -58,8 +58,16 @@ npm start
 This will start the Express server on http://localhost:5000 and the Socket.IO server on port 8000.
 
 
-Usage
-Open your browser and go to http://localhost:5173.
-Enter a username and room number in the provided fields.
-Click "Join" to enter the call.
-You are now connected and can start talking and chatting with other users in the same room.
+## Usage
+
+1. **Open Your Browser**
+   - Navigate to [http://localhost:5173](http://localhost:5173).
+
+2. **Enter Your Details**
+   - Input your **username** and **room number** in the provided fields.
+
+3. **Join the Call**
+   - Click the **"Join"** button to enter the call.
+
+4. **Start Interacting**
+   - Once connected, you can start **talking** and **chatting** with other users in the same room.
