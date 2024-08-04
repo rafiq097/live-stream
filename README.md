@@ -45,3 +45,10 @@ To start the frontend development server, navigate to the `frontend` directory a
 
 ```sh
 npm run dev
+```
+### Backend
+To start the backend development server, navigate to the `backend` directory and run:
+
+```sh
+npm start
+```
