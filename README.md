@@ -46,20 +46,15 @@ To start the frontend development server, navigate to the `frontend` directory a
 ```sh
 npm run dev
 ```
-<<<<<<< HEAD
-=======
 This will start the Vite development server on http://localhost:5173.
 
 
->>>>>>> update
 ### Backend
 To start the backend development server, navigate to the `backend` directory and run:
 
 ```sh
 npm start
 ```
-<<<<<<< HEAD
-=======
 This will start the Express server on http://localhost:5000 and the Socket.IO server on port 8000.
 
 
@@ -68,4 +63,3 @@ Open your browser and go to http://localhost:5173.
 Enter a username and room number in the provided fields.
 Click "Join" to enter the call.
 You are now connected and can start talking and chatting with other users in the same room.
->>>>>>> update
